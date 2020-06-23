@@ -2,6 +2,7 @@
 
 
 import 'package:figma_test/figma/figma_component.dart';
+import 'package:figma_test/main.dart';
 import 'package:flutter/material.dart';
 
 // TODO screen_sizes
@@ -34,22 +35,20 @@ class FigmaScreen{
 
 // TODO Recursion
   init(){
-
     data["children"].forEach((component){
-      print(component);
-      if(component.containsKey("children")){
-        component['children'].forEach((c){
-          components.add(
-            FigmaComponent.fromJson(c, offsetX, offsetY)
-          );
-        });
-      }
+      components.add(FigmaComponent.fromJson(component, offsetX, offsetY));
+      // component['children'].forEach((c){
+      //     components.add(FigmaComponent.fromJson(c, offsetX, offsetY));
+      //   });
     });
   }
 
 
-  List<Widget> getWidgets(double h, double w, {double scale=1.0})
-      =>components.map((e) 
-            => e.toWidget(h, w,fullH, fullW, scale: scale, relative: false))
-        .toList();
+  List<Widget> getWidgets(double h, double w, {double scale=0.5}){
+      List<Widget> widgets = [];
+      components.forEach((component) {
+        widgets.addAll(component.toWidgets(h, w, fullH, fullW, scale: scale));
+      });
+      return widgets;
+  }
 }

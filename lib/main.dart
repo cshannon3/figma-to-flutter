@@ -54,9 +54,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
     return  Stack(
-       children:  [
-         ...getScreenWidgets(h: s.height, w:s.width, scale: 0.3)
-       ]
+       children:  //[
+       //  ...
+         getScreenWidgets(h: s.height, w:s.width, scale: 0.3)
+      //]
     //   [
   );
   }
@@ -71,7 +72,7 @@ class Home extends StatelessWidget {
       screenWidgets.add(
         Positioned( // todo some sort of auto positioning algo based on length
           left: l*w,
-          width: w*scale,
+          width: value.fullW*scale,
           height: value.fullH*scale,
           //h*scale,
           top: 0.0,
