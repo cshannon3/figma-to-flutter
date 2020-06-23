@@ -23,6 +23,7 @@ class FigmaApiGenerator {
 
   init(String fileKey) async {
     data = await _getFile(fileKey);
+    print("init");
     var page1 = data['document']['children'][1];
 
     page1['children'].forEach((screen){

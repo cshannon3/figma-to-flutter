@@ -7,10 +7,6 @@ import 'package:figma_test/figma/utils/figma_to_dart_maps.dart';
 import 'package:figma_test/figma/utils/parse_color.dart';
 import 'package:flutter/material.dart';
 
-// abstract class FigmaComponent{
-
-
-// }
 
 class FigmaComponent {
   final Rect figmaRect;
@@ -94,8 +90,6 @@ class FigmaComponent {
   }
 
 }
-
-
 
 TextAlign getTextAlign(dynamic jsonData){
   if(jsonData['type']!="TEXT")return null;

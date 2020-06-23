@@ -19,5 +19,4 @@ final Map<String, dynamic> figmaFonts = {
   "Satisfy": (TextStyle style)=>GoogleFonts.satisfy(textStyle:style),
   "Lato": (TextStyle style)=>GoogleFonts.lato(textStyle:style),
   "Helvetica Neue": (TextStyle style)=>style,
-  
 };
