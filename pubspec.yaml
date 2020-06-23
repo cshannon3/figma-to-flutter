@@ -28,6 +28,7 @@ dependencies:
   google_fonts:
   path_parsing: 
   universal_html:
+  path_drawing:
     #https://github.com/dnfield/dart_path_parsing
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
