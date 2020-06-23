@@ -7,6 +7,7 @@ import 'figma/figma_api.dart';
 double sc=0.35;
 double leftstart=0.15;
 double topstart=0.35;
+int columns;
 //https://www.figma.com/file/58ieGqOKtHUp9rwoTBnJBk/FriendlyEats?node-id=0%3A1
 void main() async {
   var api = FigmaApiGenerator(BrowserClient(), figmaSecret);
@@ -53,43 +54,35 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
-    return  Stack(
-       children:  //[
-       //  ...
-         getScreenWidgets(h: s.height, w:s.width, scale: 0.3)
-      //]
-    //   [
-  );
+    return SingleChildScrollView(
+      child: Wrap(
+         children:  //[
+         //  ...
+           getScreenWidgets(screenSize: s) //h: s.height, w:s.width, scale: 0.3
+        //]
+      //   [
+  ),
+    );
   }
 
 
-  List<Widget> getScreenWidgets({@required double h, @required double w, double scale=1.0}){
-     
+  List<Widget> getScreenWidgets({@required Size screenSize}){    //@required double h, @required double w, double scale=1.0
     List<Widget> screenWidgets =[];
-    double l= 0.0;
-    figmaApiGenerator.screens.forEach((key, value) {
-      print(key);
+    //double l= 0.0;
+
+    figmaApiGenerator.screens.forEach((figmaScreenName, figmaScreenModel) {
       screenWidgets.add(
-        Positioned( // todo some sort of auto positioning algo based on length
-          left: l*w,
-          width: value.fullW*scale,
-          height: value.fullH*scale,
-          //h*scale,
-          top: 0.0,
-          child: Container(
-            height: h*scale,
-            width: w*scale,
-            child: SingleChildScrollView(
-              child: Stack(children: [
-                Container(height: value.fullH,),
-                ...value.getWidgets(h, w, scale: scale),
-              ]
-              )
-              ),
-          ),
-      )
+         figmaScreenModel.getScreen(
+           windowFrame: Rect.fromLTWH(
+             0.2*screenSize.width, 
+             0.2*screenSize.height, 
+             0.4*screenSize.width, 
+            (0.4*screenSize.width)*(figmaScreenModel.screenSizeInfo.figmaScreenSize.height/figmaScreenModel.screenSizeInfo.figmaScreenSize.width)
+           ), 
+           screenSize: screenSize
+          )
       );//print("ok");
-     l+=0.3;
+    // l+=0.3;
     });
     return screenWidgets;
   }
