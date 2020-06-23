@@ -1,0 +1,52 @@
+{
+    id: 1:262, name: Accept, 
+    type: TEXT, 
+    blendMode: PASS_THROUGH,
+    absoluteBoundingBox: {
+        x: 1683, 
+        y: -145, 
+        width: 95, 
+        height: 35
+    }, 
+    constraints: {
+        vertical: SCALE, 
+        horizontal: SCALE
+    }, 
+    relativeTransform: [[1, 0, 841], [0,1, 426]], 
+    size: {x: 95, y: 35}, 
+    fills: [
+        {
+            blendMode: NORMAL,
+            type: SOLID, 
+            color: {
+                r: 0.3843137323856354, 
+                g: 0, 
+                b: 0.9333333373069763, 
+                a: 1
+            }
+        }], 
+    strokes:[], 
+    strokeWeight: 1,
+    strokeAlign: OUTSIDE, 
+    strokeGeometry: [], 
+    effects: [], 
+    transitionNodeID: 1:2, 
+    transitionDuration: 300, 
+    transitionEasing: EASE_OUT,
+    characters: Accept, 
+    style: {
+        fontFamily: Roboto, 
+        fontPostScriptName: Roboto-Medium, 
+        fontWeight: 500, 
+        textAutoResize: WIDTH_AND_HEIGHT, 
+        fontSize: 30,
+        textAlignHorizontal: LEFT, 
+        textAlignVertical: TOP, 
+        letterSpacing: 0, 
+        lineHeightPx: 35.15625, 
+        lineHeightPercent: 100, 
+        lineHeightUnit: INTRINSIC_%
+    },
+    characterStyleOverrides: [], 
+    styleOverrideTable: {}
+},

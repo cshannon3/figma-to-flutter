@@ -1,0 +1,38 @@
+{
+    id: 1:253, 
+    name: Rectangle 10, 
+    type: RECTANGLE, 
+    blendMode: PASS_THROUGH,
+    absoluteBoundingBox: {
+        x: 842, 
+        y: -571, 
+        width: 965, 
+        height: 481
+    }, 
+    constraints: {
+        vertical: SCALE, 
+        horizontal: SCALE
+    }, 
+    relativeTransform: [[1, 0, 0], [0,1, 0]], 
+    size: {x: 965, y: 481}, 
+    fills: [
+        {
+            blendMode: NORMAL, 
+            type: SOLID, 
+            color: {r: 1, g: 1, b: 1, a: 1}
+        }
+    ], 
+    fillGeometry: [
+        {
+            path: M0 3.00001C0 1.34316 1.34315 0 3 0L962 0C963.657 0 965 1.34315 965 3L965 478C965 479.657 963.657 481 962 481L2.99999 481C1.34314 481 0 479.657 0 478L0 3.00001Z, 
+            windingRule:NONZERO
+        }
+    ], 
+    strokes: [], 
+    strokeWeight: 1, 
+    strokeAlign: INSIDE, 
+    strokeGeometry: [], 
+    effects: [], 
+    cornerRadius: 3, 
+    rectangleCornerRadii: [3, 3, 3, 3]
+}
