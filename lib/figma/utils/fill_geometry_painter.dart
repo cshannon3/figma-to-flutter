@@ -5,7 +5,13 @@
 //   ..style = PaintingStyle.;
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
-
+/*
+Future tests
+- Bad data 
+- No data 
+-Wrong input type
+- Scaling 
+*/
 class FillGeometryPainter extends CustomPainter {
   FillGeometryPainter(String path, Color color) : 
   p = parseSvgPathData(path),
@@ -18,10 +24,8 @@ class FillGeometryPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-   // print(size);
-    // print(p.getBounds());
-     Path newP = getClip(size);
-   //  print(newP.getBounds());
+
+    Path newP = getClip(size);
     final Paint paint = Paint()
         ..color=c
         ..strokeWidth = 1.0
@@ -38,7 +42,6 @@ class FillGeometryPainter extends CustomPainter {
     //Library link: https://pub.dev/packages/path_drawing (Library link)
     //parseSvgPathData returns a Path object
     //extracting path from SVG data
-    
     final Rect pathBounds = p.getBounds();
     final Matrix4 matrix4 = Matrix4.identity();
     matrix4.scale(size.width / pathBounds.width, size.height / pathBounds.height);

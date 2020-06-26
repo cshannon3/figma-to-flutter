@@ -1,3 +1,6 @@
+import 'package:figma_test/figma/utils/fill_geometry_painter.dart';
+import 'package:test/test.dart';
+
 
 List testPaths = [
 
@@ -21,3 +24,13 @@ List testFails = [
 [],
 '5 36.25C7.075 36.25 8.75 34.575 8.75 32.5C8.7'// m not there
 ];
+
+
+//Idk how to do this...
+// void main() {
+//   test('Empty Email Test', () {
+
+//     var result = FillGeometryPainter();
+//     expect(result, 'Enter Email!');
+//   });
+// }

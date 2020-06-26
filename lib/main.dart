@@ -64,6 +64,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
+    
     return SingleChildScrollView(
       child: Wrap(
          children:  //[

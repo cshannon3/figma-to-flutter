@@ -5,7 +5,11 @@
 import 'package:figma_test/figma/figma_screen.dart';
 import 'package:figma_test/figma/figma_text.dart';
 import 'package:figma_test/figma/figma_vector.dart';
+import 'package:figma_test/figma/utils/box_decoration_from_json.dart';
+import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
+
+import 'utils/parse_color.dart';
 
 
 
@@ -48,17 +52,35 @@ class FigmaFrame {
       _getSelf(screenSizeInfo: screenSizeInfo),
       ..._getChildren(screenSizeInfo: screenSizeInfo)
   ];
-  Widget _getSelf({@required ScreenSizeInfo screenSizeInfo})=>
+  Widget _getSelf({@required ScreenSizeInfo screenSizeInfo}){
    
-      Positioned(
+     return Positioned(
           top:screenSizeInfo.relativeWindowHeight*figmaRect.top,
           height: screenSizeInfo.relativeWindowHeight*figmaRect.height,
           left: screenSizeInfo.relativeWindowWidth*figmaRect.left,
           width:screenSizeInfo.relativeWindowWidth*figmaRect.width,
         child: Container(
-          child: Container(
-            width:double.infinity, height:double.infinity,
-            decoration: BoxDecoration(
+          width:double.infinity, height:double.infinity,
+          decoration: FigmaStyles(data).getDecoration(parseColor(data))
+        )
+      );
+  }
+  List<Widget> _getChildren({@required ScreenSizeInfo screenSizeInfo}){
+    List<Widget> childrenWidgets = [];
+    children?.forEach((childComponent) {
+      childrenWidgets.addAll(
+        childComponent.toWidgets(screenSizeInfo: screenSizeInfo)
+      ); 
+    });
+    return childrenWidgets;
+  }
+
+}
+
+
+/*
+
+BoxDecoration(
               color:parseColor(data),
               border:(data["strokes"].length>0)?Border.all(
                 color: parseColor(data["strokes"][0]),
@@ -82,18 +104,4 @@ class FigmaFrame {
               gradient: null,
               backgroundBlendMode: null,
             ),
-          )
-        )
-      );
-
-  List<Widget> _getChildren({@required ScreenSizeInfo screenSizeInfo}){
-    List<Widget> childrenWidgets = [];
-    children?.forEach((childComponent) {
-      childrenWidgets.addAll(
-        childComponent.toWidgets(screenSizeInfo: screenSizeInfo)
-      ); 
-    });
-    return childrenWidgets;
-  }
-
-}
+*/

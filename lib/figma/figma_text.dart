@@ -3,6 +3,8 @@
 
 
 import 'package:figma_test/figma/figma_screen.dart';
+import 'package:figma_test/figma/utils/parse_color.dart';
+import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
 
 import 'figma_vector.dart';
@@ -46,8 +48,11 @@ class FigmaText {
       
   ];
 
-  Widget _getSelf({@required ScreenSizeInfo screenSizeInfo})=>
-    (type=="FRAME"||type=="COMPONENT")?SizedBox():
+  Widget _getSelf({@required ScreenSizeInfo screenSizeInfo}){
+    //print(text);
+   // print(fontSize);
+    //print(fontSize*screenSizeInfo.scaleX);
+    return
       Positioned(
           top:screenSizeInfo.relativeWindowHeight*figmaRect.top,
           height: screenSizeInfo.relativeWindowHeight*figmaRect.height,
@@ -61,11 +66,10 @@ class FigmaText {
           style: TextStyle(
             color: color,
             fontSize: fontSize*screenSizeInfo.scaleX,
-            
           ),)
         )
       );
-  
+  }
  
 
 }

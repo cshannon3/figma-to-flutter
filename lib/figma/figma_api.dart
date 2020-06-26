@@ -31,9 +31,6 @@ class FigmaApiGenerator {
        screens[screen["name"]].init();
    });
   }
-
-
-
 }
 
 
