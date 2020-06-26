@@ -2,13 +2,16 @@
 
 
 import 'package:figma_test/figma/figma_component.dart';
+import 'package:figma_test/figma/figma_frame.dart';
+import 'package:figma_test/figma/figma_text.dart';
+import 'package:figma_test/figma/figma_vector.dart';
 import 'package:flutter/material.dart';
 
 class FigmaScreen{
   final ScreenSizeInfo screenSizeInfo;
   final String name;
   final dynamic data;
-  List<FigmaComponent>  components=[];
+  List components=[];
 
   FigmaScreen({
     @required this.screenSizeInfo,
@@ -23,16 +26,27 @@ class FigmaScreen{
 
 
   init(){
+    components=[];
     data["children"].forEach((component){
-      components.add(FigmaComponent.fromJson(component, screenSizeInfo)); //offsetX, offsetY
+      String type = component["type"];
+      // Choice 1
+      List<String> frames = ["CANVAS", "FRAME","COMPONENT","INSTANCE"];
+      List<String> vectors = ["RECTANGLE", "VECTOR", "STAR","LINE","ELLIPSE", "REGULAR_ POLYGON","SLICE"];
+      if(component["name"]=="navbar")print(component);
+      
+      if(type =="TEXT"){
+        components.add(FigmaText.fromJson(component, screenSizeInfo));
+      }else if (frames.contains(type)){
+        components.add(FigmaFrame.fromJson(component, screenSizeInfo));
+      }else if (vectors.contains(type)){
+        components.add(FigmaVector.fromJson(component, screenSizeInfo));
+      }
+      //Choice 2
+      //components.add(FigmaComponent.fromJson(component, screenSizeInfo)); //offsetX, offsetY
     });
   }
 
   Widget getScreen({@required Rect windowFrame, @required Size screenSize})=>
-    
-    //Positioned.fromRect( // todo some sort of auto positioning algo based on length
-          //rect: windowFrame,
-          //child: 
           Padding(
             padding: EdgeInsets.all(50.0),
             child: Container(
@@ -45,11 +59,9 @@ class FigmaScreen{
                     screenSize:  screenSize,
                     windowFrame: windowFrame,
                     ),
-                ]
-                )
-                ),
-         // ),
-      ),
+                ])
+                  ),
+            ),
           );
   
 
@@ -99,6 +111,20 @@ class ScreenSizeInfo{
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    //Positioned.fromRect( // todo some sort of auto positioning algo based on length
+          //rect: windowFrame,
+          //child: 
           // left: l*w,
           // width: value.*scale,
           // height: value.fullH*scale,

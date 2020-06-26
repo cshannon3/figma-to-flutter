@@ -25,7 +25,7 @@ class FigmaApiGenerator {
     data = await _getFile(fileKey);
     print("init");
     var page1 = data['document']['children'][0];
-print(page1);
+   // print(page1);
     page1['children'].forEach((screen){
         screens[screen["name"]]=FigmaScreen.fromJson(screen);
        screens[screen["name"]].init();

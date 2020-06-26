@@ -7,6 +7,9 @@ import 'package:figma_test/figma/utils/figma_to_dart_maps.dart';
 import 'package:figma_test/figma/utils/parse_color.dart';
 import 'package:flutter/material.dart';
 
+import 'figma_vector.dart';
+
+
 
 class FigmaComponent {
   final Rect figmaRect;
@@ -105,6 +108,8 @@ TextAlign getTextAlign(dynamic jsonData){
 }
 
 
+
+
 //## `blendMode` 
 /*
 layoutAlign String: How the layer is aligned inside an auto-layout frame. This property is only provided for direct children of auto-layout frames.
@@ -175,6 +180,14 @@ transitionEasingEasingType default: null
 The easing curve used in the prototyping transition on this node
   */
 }
+
+
+
+
+
+
+
+
 
 
 
