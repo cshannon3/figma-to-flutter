@@ -1,11 +1,12 @@
 
+
+
+
 import 'package:figma_test/secrets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/browser_client.dart';
 
 import 'figma/figma_api.dart';
-
-
 import 'dart:ui';
 
 final Map figmafiles ={
@@ -19,7 +20,7 @@ int columns;
 //https://www.figma.com/file/58ieGqOKtHUp9rwoTBnJBk/FriendlyEats?node-id=0%3A1
 void main() async {
   var api = FigmaApiGenerator(BrowserClient(), figmaSecret);
-  await api.init(figmafiles["b"], getImages: true);
+  await api.init(figmafiles["a"], getImages: true);
   runApp(MyApp(figmaApiGenerator: api,));
 }
 
@@ -48,159 +49,100 @@ class _MyAppState extends State<MyApp> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Home(figmaApiGenerator: widget.figmaApiGenerator,),
+        child:// Center()
+        Home(figmaApiGenerator: widget.figmaApiGenerator,),
       ),
       ),
     
     );
   }
 }
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   final FigmaApiGenerator figmaApiGenerator;
 
   const Home({Key key, this.figmaApiGenerator}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  String currentScreen;
+  double pctSize = 0.3;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.figmaApiGenerator.addListener(() {
+      setState(() {
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
-    
+  
     return SingleChildScrollView(
       child: Wrap(
-         children:  //[
-         //  ...
-           getScreenWidgets(screenSize: s) //h: s.height, w:s.width, scale: 0.3
-        //]
-      //   [
+         children:  
+           getScreenWidgets(screenSize: s)
   ),
     );
   }
 
-
   List<Widget> getScreenWidgets({@required Size screenSize}){    //@required double h, @required double w, double scale=1.0
     List<Widget> screenWidgets =[];
-    //double l= 0.0;
-
-    figmaApiGenerator.screens.forEach((figmaScreenName, figmaScreenModel) {
+    widget.figmaApiGenerator.screens.forEach((figmaScreenName, figmaScreenModel) {
+       double figmaH= figmaScreenModel.screenSizeInfo.figmaScreenSize.height;
+        double figmaW= pctSize*figmaScreenModel.screenSizeInfo.figmaScreenSize.width;
+      if(currentScreen==null){
       screenWidgets.add(
-         figmaScreenModel.getScreen(
-           windowFrame: Rect.fromLTWH(
-             0.2*screenSize.width, 
-             0.2*screenSize.height, 
-             0.4*screenSize.width, 
-            (0.4*screenSize.width)*(figmaScreenModel.screenSizeInfo.figmaScreenSize.height/figmaScreenModel.screenSizeInfo.figmaScreenSize.width)
-           ), 
-           screenSize: screenSize
+          GestureDetector(
+            onLongPress: (){
+              setState(() {
+                currentScreen=figmaScreenName;
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.all(50.0),
+              child: AnimatedContainer(
+                duration: Duration(seconds:2),
+                height: pctSize*figmaH,
+                width:  pctSize*figmaW,
+                child:   figmaScreenModel.getScreen(
+             windowFrame: Rect.fromLTWH(
+               0.1*screenSize.width, 
+               0.1*screenSize.height, 
+               pctSize*figmaW, 
+               pctSize*figmaH
+             // (miniSize*screenSize.width)*(figmaScreenModel.screenSizeInfo.figmaScreenSize.height/figmaScreenModel.screenSizeInfo.figmaScreenSize.width)
+             ), 
+             screenSize: screenSize
+            ))),
           )
-      );//print("ok");
-    // l+=0.3;
+      );
+
+    }else if(currentScreen==figmaScreenName){
+         screenWidgets.add(
+          GestureDetector(
+            onLongPress: (){
+              setState(() {
+                currentScreen=null;
+              });
+            },
+            child: Container(
+              height: figmaH,//h*scale,
+              width:  figmaW,
+              child:   figmaScreenModel.getScreen(
+             windowFrame: Rect.fromLTWH( 0,  0, figmaW, figmaH), 
+             screenSize: screenSize
+            )),
+          )
+      );
+    }
     });
     return screenWidgets;
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //     Positioned(
-    //       left: s.width*leftstart,
-    //       width: s.width*sc,
-    //       top: s.height*topstart,
-    //       height: s.height*sc,
-    //       child: 
-    //               children: [
-    //                 ...figmaApiGenerator.getWidgets(s.height*sc, s.width*sc, scale:sc),
-    //               ]
-             
-    //                 ...figmaApiGenerator.getWidgets(s.height*sc, s.width*sc, scale:sc),
-              
-    //     ),
-    //   ],
-    // );
-// class Home extends StatelessWidget {
-//   final FigmaApiGenerator figmaApiGenerator;
-
-//   const Home({Key key, this.figmaApiGenerator}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     Size s = MediaQuery.of(context).size;
-//     return Stack(
-//       children: [
-//         Positioned(
-//           left: s.width*leftstart,
-//           width: s.width*sc,
-//           top: s.height*topstart,
-//           height: s.height*sc,
-//           child: Draggable(
-//             feedback: Container(
-//               height: s.height*sc,
-//               width: s.width*sc,
-//               child: Stack(
-//                   children: [
-//                     ...figmaApiGenerator.getWidgets(s.height*sc, s.width*sc, scale:sc),
-//                   ]
-//               ),
-//             ),
-//             child: Container(
-//               height: s.height*sc,
-//               width: s.width*sc,
-//               child: Stack(
-//                   children: [
-//                     ...figmaApiGenerator.getWidgets(s.height*sc, s.width*sc, scale:sc),
-//                   ]
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// class Home extends StatelessWidget {
-//   final FigmaApiGenerator figmaApiGenerator;
-
-//   const Home({Key key, this.figmaApiGenerator}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     Size s = MediaQuery.of(context).size;
-//     return SingleChildScrollView(
-//       child: Stack(
-//           children: [
-//             Container(height: 5000,),
-//             ...figmaApiGenerator.getWidgets(s.height, s.width),
-//           ]
-  
-//       ),
-    
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key key, this.title,  @required this.figmaApiGenerator}) : super(key: key);
-//   final String title;
-//   final FigmaApiGenerator figmaApiGenerator;
-
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return  
-//   }
-// }

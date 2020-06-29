@@ -39,18 +39,12 @@ class FigmaScreen{
       }else if (vectors.contains(type)){
         components.add(FigmaVector.fromJson(component, screenSizeInfo));
       }
-      //Choice 2
-      //components.add(FigmaComponent.fromJson(component, screenSizeInfo)); //offsetX, offsetY
     });
   }
 
   Widget getScreen({@required Rect windowFrame, @required Size screenSize})=>
-          Padding(
-            padding: EdgeInsets.all(50.0),
-            child: Container(
-              height: windowFrame.height,//h*scale,
-              width: windowFrame.width,
-              child: SingleChildScrollView(
+        
+              SingleChildScrollView(
                 child: Stack(children: [
                   Container(height: screenSizeInfo.figmaScreenSize.height,),
                   ..._getWidgets(

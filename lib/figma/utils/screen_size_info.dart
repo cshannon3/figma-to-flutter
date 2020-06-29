@@ -18,14 +18,14 @@ class ScreenSizeInfo{
     this.figmaOffsetY=jsonData["absoluteBoundingBox"]['y'];
 
   setCurrentPositioning({@required Rect newWindowFrame, @required Size screenSize}){
-    print("SCALE X");
+    //print("SCALE X");
 
     windowFrame=newWindowFrame;
     relativeWindowWidth = windowFrame.width/figmaScreenSize.width;
     relativeWindowHeight = windowFrame.height/figmaScreenSize.height;
     scaleX = windowFrame.width/screenSize.width;
-    print(relativeWindowWidth);
-    print(newWindowFrame.width);
+   // print(relativeWindowWidth);
+   // print(newWindowFrame.width);
     scaleY = windowFrame.height/screenSize.height;
   }
 
