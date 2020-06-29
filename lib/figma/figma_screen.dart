@@ -30,7 +30,7 @@ class FigmaScreen{
       // Choice 1
       List<String> frames = ["CANVAS", "FRAME","COMPONENT","INSTANCE"];
       List<String> vectors = ["RECTANGLE", "VECTOR", "STAR","LINE","ELLIPSE", "REGULAR_ POLYGON","SLICE"];
-      if(component["name"]=="navbar")print(component);
+      //if(component["name"]=="navbar")print(component);
       
       if(type =="TEXT"){
         components.add(FigmaText.fromJson(component, screenSizeInfo));
@@ -58,11 +58,23 @@ class FigmaScreen{
                     windowFrame: windowFrame,
                     ),
                 ])
-                  ),
-            ),
+            //     ),
+          //  ),
           );
   
+  List<String> getImageIDs(){
+    List<String> out=[];
+    components.forEach((component) {
+      out.addAll(component.getImageIDs());
+    });
+    return out;
+  }
 
+  setImageUrls(Map<String,dynamic> idUrlsMap){
+    components.forEach((childComponent) {
+     childComponent.setImageUrls(idUrlsMap);
+    });
+  }
 
   List<Widget> _getWidgets({@required Rect windowFrame, @required Size screenSize}){
       screenSizeInfo.setCurrentPositioning(newWindowFrame: windowFrame, screenSize: screenSize );

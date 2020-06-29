@@ -2,16 +2,17 @@
 
 
 
-import 'package:figma_test/figma/figma_screen.dart';
+
+import 'package:figma_test/figma/figma_component_base.dart';
 import 'package:figma_test/figma/utils/parse_color.dart';
 import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+ 
+  final rand = math.Random();
 
-import 'figma_vector.dart';
 
-
-
-class FigmaText {
+class FigmaText extends FigmaComponentBase {
   final Rect figmaRect;
    final Color color;
    final String type;

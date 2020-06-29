@@ -9,11 +9,12 @@ import 'package:figma_test/figma/utils/box_decoration_from_json.dart';
 import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
 
+import 'figma_component_base.dart';
 import 'utils/parse_color.dart';
 
 
 
-class FigmaFrame {
+class FigmaFrame  extends FigmaComponentBase {
   final Rect figmaRect;
   final List children;
   final String type;
@@ -47,11 +48,29 @@ class FigmaFrame {
        }
         ).toList():[];
 
+  @override
+  List<String> getImageIDs(){
+    List<String> out = [];
+    children?.forEach((childComponent) {
+      out.addAll(childComponent.getImageIDs()); 
+    });
+    return out;
+  }
+
+  @override
+  setImageUrls(Map<String,dynamic> idUrlsMap){
+    children?.forEach((childComponent) {
+     childComponent.setImageUrls(idUrlsMap);
+    });
+  }
+
   List<Widget> toWidgets({@required ScreenSizeInfo screenSizeInfo})=>    
     [
       _getSelf(screenSizeInfo: screenSizeInfo),
       ..._getChildren(screenSizeInfo: screenSizeInfo)
   ];
+
+  
   Widget _getSelf({@required ScreenSizeInfo screenSizeInfo}){
    
      return Positioned(

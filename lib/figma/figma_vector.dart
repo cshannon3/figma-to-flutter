@@ -3,46 +3,63 @@
 
 import 'dart:typed_data';
 
+import 'package:figma_test/figma/figma_component_base.dart';
 import 'package:figma_test/figma/figma_screen.dart';
 import 'package:figma_test/figma/utils/box_decoration_from_json.dart';
+import 'package:figma_test/figma/utils/checks.dart';
 import 'package:figma_test/figma/utils/parse_color.dart';
 import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
 
 import 'utils/fill_geometry_painter.dart';
 
-class FigmaVector {
+class FigmaVector extends FigmaComponentBase  {
   final Rect figmaRect;
  // final Color color;
   final String type;
-  final String imageUrl;
+  String imageUrl;
   final Map data;
+  final String id;
   //final BoxDecoration decoration;
 
 
   FigmaVector( {
     @required this.figmaRect, 
-   // @required this.color,
      @required this.type,
-    this.imageUrl,
-  //  this.decoration,
+    //this.imageUrl,
+    this.id,
     this.data
     });
 
   FigmaVector.fromJson(Map<String, dynamic> jsonData, ScreenSizeInfo screenSizeInfo): //
       this.figmaRect = screenSizeInfo.toFigmaRect(absoluteBoundingBox: jsonData["absoluteBoundingBox"]),
+      this.id= jsonData["id"],
       this.type = jsonData['type'],
-      this.data=jsonData,
-     // this.color= parseColor(jsonData),
-      this.imageUrl = jsonData["name"].contains("image")?
-        jsonData["name"].substring(jsonData["name"].indexOf("http://")):null;
+      this.data=jsonData;
+      //this.imageUrl = jsonData["name"].contains("image")?  jsonData["name"].substring(jsonData["name"].indexOf("http://")):null;
     
 
   List<Widget> toWidgets({@required ScreenSizeInfo screenSizeInfo})=>    
     [
       _getSelf(screenSizeInfo: screenSizeInfo),
   ];
+  @override
+  List<String> getImageIDs(){
+    
+    if (isImage(data))return [id];
+    return [];
+  }
 
+  @override
+  setImageUrls(Map<String,dynamic> idUrlsMap){
+
+    if(idUrlsMap.containsKey(id)){
+      
+      imageUrl= idUrlsMap[id];
+      //print(imageUrl);
+    }
+    
+  }
   Widget _getSelf({@required ScreenSizeInfo screenSizeInfo})=>
   
       Positioned(

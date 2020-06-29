@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'package:figma_test/figma/figma_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
-
-class FigmaApiGenerator {
+class FigmaApiGenerator extends ChangeNotifier{
   final String authToken;
   final BaseClient http;
   Map<String, dynamic> data;
   Map<String, FigmaScreen> screens = {};
+  bool loading=true;
+
   FigmaApiGenerator(this.http, this.authToken);
+  Widget imageTest;
   
   Future<dynamic> _getFile(String fileKey) async {
     var response = await http.get(
@@ -19,18 +20,56 @@ class FigmaApiGenerator {
           "X-FIGMA-TOKEN": this.authToken,
         });
     return json.decode(response.body);
+  } 
+
+  Future<Map<String,dynamic>> _getImages(String fileKey, List<String> ids) async {
+    print(ids);
+    String urlids = ids.join(",");
+    
+    var response = await http.get(
+        "https://api.figma.com/v1/images/$fileKey?ids=$urlids",
+        headers: {
+          "X-FIGMA-TOKEN": this.authToken,
+        });
+     var jsonData = json.decode(response.body);
+  //   if(jsonData["error"]==null)
+     return jsonData["error"]??jsonData["images"];
+    // jsonData[""]
+
   }
 
-  init(String fileKey) async {
+  init(String fileKey,{bool getImages = false}) async {
+    loading=true;
     data = await _getFile(fileKey);
     print("init");
     var page1 = data['document']['children'][0];
    // print(page1);
-    page1['children'].forEach((screen){
-        screens[screen["name"]]=FigmaScreen.fromJson(screen);
-       screens[screen["name"]].init();
+    int n = 0;
+   // print(page1['children'].length);
+    page1['children'].forEach((screen) async {
+
+        if(screen.containsKey("children")){
+          screens[screen["name"]]=FigmaScreen.fromJson(screen);
+          screens[screen["name"]].init();
+          if(getImages){
+            List<String> ids=screens[screen["name"]].getImageIDs();
+            //print(ids);
+           Map<String,dynamic> imagenodes = await _getImages(fileKey, ids);
+          // print(imagenodes);
+           screens[screen["name"]].setImageUrls(imagenodes);
+          }
+        }
+        n+=1;
+        if(n== page1['children'].length){
+          //print("doneSSSS");
+          loading=true;
+          notifyListeners();
+        }
    });
+   
   }
+
+
 }
 
 

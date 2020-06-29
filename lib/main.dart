@@ -7,21 +7,19 @@ import 'figma/figma_api.dart';
 
 
 import 'dart:ui';
-import 'package:path_drawing/path_drawing.dart';
 
+final Map figmafiles ={
+"a":"rCp1ekGyTPz1K92TE32ZwL",
+"b":"58ieGqOKtHUp9rwoTBnJBk",
+"c":"NBrXfF9tqmaNu4xlXtSY7d",
+"prototyping":"Uvf5arrdAPCgXbSV8a2lT1"
+};
 
-
-double sc=0.35;
-double leftstart=0.15;
-double topstart=0.35;
 int columns;
 //https://www.figma.com/file/58ieGqOKtHUp9rwoTBnJBk/FriendlyEats?node-id=0%3A1
 void main() async {
   var api = FigmaApiGenerator(BrowserClient(), figmaSecret);
- // await api.init("58ieGqOKtHUp9rwoTBnJBk");
-  //https://www.figma.com/file/rCp1ekGyTPz1K92TE32ZwL/Portfolios?node-id=2%3A39
-await api.init("rCp1ekGyTPz1K92TE32ZwL");
-//await api.init("NBrXfF9tqmaNu4xlXtSY7d");
+  await api.init(figmafiles["b"], getImages: true);
   runApp(MyApp(figmaApiGenerator: api,));
 }
 
