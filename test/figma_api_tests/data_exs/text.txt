@@ -50,3 +50,36 @@
     characterStyleOverrides: [], 
     styleOverrideTable: {}
 },
+
+
+
+
+id: 2:59, 
+name: ANDROID DOWNLOAD, 
+type: TEXT,
+blendMode: PASS_THROUGH, 
+absoluteBoundingBox: {x: 1385, y: 535, width: 281, height: 32}, 
+constraints: {vertical: TOP, horizontal: LEFT}, 
+relativeTransform: [[1, 0, 785],
+[0, 1, 1124]], 
+size: {x: 281, y: 32}, 
+fills: [{blendMode: NORMAL, 
+type: SOLID, color: {r: 1, g: 1, b: 1, a: 1}}], 
+strokes: [], strokeWeight: 1, 
+strokeAlign: OUTSIDE,
+strokeGeometry: [], 
+effects: [], 
+characters: ANDROID DOWNLOAD, 
+style: {
+    fontFamily: Galdeano, 
+    fontPostScriptName: Galdeano-Regular, 
+    fontWeight: 400, 
+    textAutoResize:WIDTH_AND_HEIGHT, 
+    fontSize: 30, 
+    textAlignHorizontal: CENTER, 
+    textAlignVertical: TOP, 
+    letterSpacing: 0, 
+    lineHeightPx: 35.15625, 
+    lineHeightPercent: 100, 
+    lineHeightUnit:INTRINSIC_%}, 
+    characterStyleOverrides: [], styleOverrideTable: {}},
