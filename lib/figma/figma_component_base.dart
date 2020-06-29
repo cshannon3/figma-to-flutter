@@ -1,7 +1,7 @@
 
 
-
 abstract class FigmaComponentBase{
+
 
   List<String> getImageIDs()=>[];
   

@@ -82,11 +82,25 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
   
-    return SingleChildScrollView(
-      child: Wrap(
-         children:  
-           getScreenWidgets(screenSize: s)
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: widget.figmaApiGenerator.pages.map((e) 
+        => 
+        RaisedButton(
+          onPressed:(){}, 
+          child: Text(e),)
+          ).toList(),),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Wrap(
+               children:  
+                 getScreenWidgets(screenSize: s)
   ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -94,7 +108,7 @@ class _HomeState extends State<Home> {
     List<Widget> screenWidgets =[];
     widget.figmaApiGenerator.screens.forEach((figmaScreenName, figmaScreenModel) {
        double figmaH= figmaScreenModel.screenSizeInfo.figmaScreenSize.height;
-        double figmaW= pctSize*figmaScreenModel.screenSizeInfo.figmaScreenSize.width;
+        double figmaW= figmaScreenModel.screenSizeInfo.figmaScreenSize.width;
       if(currentScreen==null){
       screenWidgets.add(
           GestureDetector(
@@ -115,7 +129,6 @@ class _HomeState extends State<Home> {
                0.1*screenSize.height, 
                pctSize*figmaW, 
                pctSize*figmaH
-             // (miniSize*screenSize.width)*(figmaScreenModel.screenSizeInfo.figmaScreenSize.height/figmaScreenModel.screenSizeInfo.figmaScreenSize.width)
              ), 
              screenSize: screenSize
             ))),

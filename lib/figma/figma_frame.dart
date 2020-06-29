@@ -2,9 +2,9 @@
 
 
 
-import 'package:figma_test/figma/figma_screen.dart';
 import 'package:figma_test/figma/figma_text.dart';
 import 'package:figma_test/figma/figma_vector.dart';
+import 'package:figma_test/figma/positioned_wrapper.dart';
 import 'package:figma_test/figma/utils/box_decoration_from_json.dart';
 import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +43,7 @@ class FigmaFrame  extends FigmaComponentBase {
           }else if (vectors.contains(type)){
            return FigmaVector.fromJson(child, screenSizeInfo);
           }
-          return FigmaVector.fromJson(child, screenSizeInfo);
-              
+          return FigmaVector.fromJson(child, screenSizeInfo);  
        }
         ).toList():[];
 
@@ -59,6 +58,7 @@ class FigmaFrame  extends FigmaComponentBase {
 
   @override
   setImageUrls(Map<String,dynamic> idUrlsMap){
+    // if(data.containsKey("transitionNodeID"))print(data);
     children?.forEach((childComponent) {
      childComponent.setImageUrls(idUrlsMap);
     });
@@ -73,12 +73,10 @@ class FigmaFrame  extends FigmaComponentBase {
   
   Widget _getSelf({@required ScreenSizeInfo screenSizeInfo}){
    
-     return Positioned(
-          top:screenSizeInfo.relativeWindowHeight*figmaRect.top,
-          height: screenSizeInfo.relativeWindowHeight*figmaRect.height,
-          left: screenSizeInfo.relativeWindowWidth*figmaRect.left,
-          width:screenSizeInfo.relativeWindowWidth*figmaRect.width,
-        child: Container(
+     return  positionedWrapper(
+      screenSizeInfo: screenSizeInfo, 
+      figmaRect: figmaRect, 
+      child:  Container(
           width:double.infinity, height:double.infinity,
           decoration: FigmaStyles(data).getDecoration(parseColor(data))
         )
@@ -96,31 +94,3 @@ class FigmaFrame  extends FigmaComponentBase {
 
 }
 
-
-/*
-
-BoxDecoration(
-              color:parseColor(data),
-              border:(data["strokes"].length>0)?Border.all(
-                color: parseColor(data["strokes"][0]),
-                width: data["strokeWeight"].toDouble(),
-              ):null,
-              borderRadius:data.containsKey("rectangleCornerRadii") ?BorderRadius.only(
-                topLeft: Radius.circular(data["rectangleCornerRadii"][0]),
-                topRight: Radius.circular(data["rectangleCornerRadii"][1]),
-                bottomLeft: Radius.circular(data["rectangleCornerRadii"][2]),
-                bottomRight: Radius.circular(data["rectangleCornerRadii"][3]),
-              ):null,
-              boxShadow: (!data.containsKey("effects") || data["effects"].length==0)?[]:
-             data["effects"].map<BoxShadow>((effect)=>
-                BoxShadow(
-                      color:parseColor(effect),
-                      offset:Offset(effect['offset']['x'], effect['offset']['y']),
-                      blurRadius:effect['radius'].toDouble(),
-                      //spreadRadius:,
-                    )
-                ).toList(),
-              gradient: null,
-              backgroundBlendMode: null,
-            ),
-*/

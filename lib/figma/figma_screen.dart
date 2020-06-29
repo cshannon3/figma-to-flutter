@@ -9,17 +9,21 @@ class FigmaScreen{
   final ScreenSizeInfo screenSizeInfo;
   final String name;
   final dynamic data;
+  final String id;
   List components=[];
 
   FigmaScreen({
     @required this.screenSizeInfo,
     @required this.name, 
     @required this.data,
+    @required this.id,
+    
     });
      
    FigmaScreen.fromJson(Map<String, dynamic> jsonData):
       this.screenSizeInfo = ScreenSizeInfo.fromJson(jsonData), 
       this.name=jsonData["name"], 
+      this.id = jsonData["id"],
       this.data=jsonData;
 
 
@@ -30,8 +34,7 @@ class FigmaScreen{
       // Choice 1
       List<String> frames = ["CANVAS", "FRAME","COMPONENT","INSTANCE"];
       List<String> vectors = ["RECTANGLE", "VECTOR", "STAR","LINE","ELLIPSE", "REGULAR_ POLYGON","SLICE"];
-      //if(component["name"]=="navbar")print(component);
-      
+    
       if(type =="TEXT"){
         components.add(FigmaText.fromJson(component, screenSizeInfo));
       }else if (frames.contains(type)){
@@ -52,8 +55,6 @@ class FigmaScreen{
                     windowFrame: windowFrame,
                     ),
                 ])
-            //     ),
-          //  ),
           );
   
   List<String> getImageIDs(){

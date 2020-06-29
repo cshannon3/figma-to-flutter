@@ -4,29 +4,26 @@
 
 
 import 'package:figma_test/figma/figma_component_base.dart';
+import 'package:figma_test/figma/positioned_wrapper.dart';
 import 'package:figma_test/figma/utils/parse_color.dart';
 import 'package:figma_test/figma/utils/screen_size_info.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
  
-  final rand = math.Random();
-
-
+final rand = math.Random();
 class FigmaText extends FigmaComponentBase {
   final Rect figmaRect;
-   final Color color;
-   final String type;
+  final Color color;
+  final String type;
   final String text;
   final double fontSize;
   final TextAlign textAlign;
   final dynamic data;
-  //final dynamic figmaItem;
-
 
   FigmaText({
     @required this.figmaRect, 
     @required this.color,
-     @required this.type,
+    @required this.type,
     this.text,
     this.fontSize,
     this.textAlign,
@@ -50,17 +47,10 @@ class FigmaText extends FigmaComponentBase {
 
 
   Widget _getSelf({@required ScreenSizeInfo screenSizeInfo}){
-    return 
-      Positioned(
-          top:screenSizeInfo.relativeWindowHeight*figmaRect.top,
-         // height: screenSizeInfo.windowFrame.height- screenSizeInfo.relativeWindowHeight*figmaRect.top,
-        // screenSizeInfo.relativeWindowHeight*figmaRect.height,
-          left: screenSizeInfo.relativeWindowWidth*figmaRect.left,
-        child: SizedBox(
-          height:screenSizeInfo.relativeWindowHeight*figmaRect.height,
-          width:screenSizeInfo.relativeWindowWidth*figmaRect.width,
-          child: 
-          //CustomPaint(  painter: FigmaTextPainter(text, fontSize, color),),
+    return  positionedWrapper(
+      screenSizeInfo: screenSizeInfo, 
+      figmaRect: figmaRect, 
+      child: 
           Text(
             text, 
           textAlign: textAlign,
@@ -72,11 +62,8 @@ class FigmaText extends FigmaComponentBase {
             ),
           ),
           ),
-        
-        )
       );
   }
- 
 
 }
 
@@ -99,6 +86,16 @@ TextAlign getTextAlign(dynamic jsonData){
 
 
     
+
+    // Positioned(
+    //       top:screenSizeInfo.relativeWindowHeight*figmaRect.top,
+    //       left: screenSizeInfo.relativeWindowWidth*figmaRect.left,
+    //     child: SizedBox(
+    //       height:screenSizeInfo.relativeWindowHeight*figmaRect.height,
+    //       width:screenSizeInfo.relativeWindowWidth*figmaRect.width,
+    //       child:
+         // height: screenSizeInfo.windowFrame.height- screenSizeInfo.relativeWindowHeight*figmaRect.top,
+        // screenSizeInfo.relativeWindowHeight*figmaRect.height,
     // var s= data.containsKey("constraints")?data["constraints"]:{};
     // print(s);
     // print(data["name"]);

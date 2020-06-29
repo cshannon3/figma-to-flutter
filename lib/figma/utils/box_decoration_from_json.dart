@@ -9,7 +9,18 @@ class FigmaStyles{
 
   BoxDecoration getDecoration(Color color){
     // check if visible/ pass through
+      
     if(data.containsKey("blendMode") && data["blendMode"]=="PASS_THROUGH"){
+         if(data.containsKey("transitionNodeID")){
+         return BoxDecoration(
+              border:
+              Border.all(
+                color: Colors.yellow,
+                width: 2,
+              )
+            );
+    }
+         
           return null;
     }
     return BoxDecoration(
@@ -44,10 +55,12 @@ class FigmaStyles{
   }
 
   BoxBorder _getBoxBorder(){
+
     return (data["strokes"].length>0)?Border.all(
                 color: parseColor(data["strokes"][0]),
                 width: data["strokeWeight"].toDouble(),
-              ):null;
+              ):
+              null;
   }
   Gradient _getGradient()=>null; //todo
   BlendMode _getBlendMode()=>null; // todo
