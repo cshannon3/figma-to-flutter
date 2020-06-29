@@ -58,7 +58,6 @@ class FigmaFrame  extends FigmaComponentBase {
 
   @override
   setImageUrls(Map<String,dynamic> idUrlsMap){
-    // if(data.containsKey("transitionNodeID"))print(data);
     children?.forEach((childComponent) {
      childComponent.setImageUrls(idUrlsMap);
     });
